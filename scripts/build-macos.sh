@@ -32,6 +32,9 @@ PROJECT_VERSION="${APP_VERSION:-$(grep -o '"productVersion"[[:space:]]*:[[:space
 if [ -z "$PROJECT_VERSION" ]; then
     PROJECT_VERSION="1.2.0"
 fi
+# Vite/Rollup needs more than Node's default heap for the production bundle on
+# GitHub's arm64 macOS runner. Preserve an explicit caller override.
+export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=6144}"
 
 # 检测 CPU 架构
 ARCH=$(uname -m)
@@ -137,7 +140,7 @@ echo -e "  ${GREEN}✓${NC} 前端构建完成"
 # ==================== 构建 macOS 应用 ====================
 
 echo -e "\n${CYAN}[5/6] 构建 macOS 应用 (${PLATFORM})...${NC}"
-wails build --clean --platform "${PLATFORM}" -ldflags "-X main.Version=${PROJECT_VERSION} -X main.VersionCommit=${VERSION_COMMIT:-}"
+wails build --clean -s --platform "${PLATFORM}" -ldflags "-X main.Version=${PROJECT_VERSION} -X main.VersionCommit=${VERSION_COMMIT:-}"
 echo -e "  ${GREEN}✓${NC} 应用构建完成"
 
 # 确认产物
