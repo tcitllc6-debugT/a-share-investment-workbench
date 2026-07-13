@@ -15,6 +15,7 @@ jobs:
       APP_VERSION: 1.2.${{ github.run_number }}
       UPDATE_BASE_URL: https://github.com/tcitllc6-debugT/a-share-investment-workbench/releases/download/v1.2.${{ github.run_number }}
       UPDATE_MANIFEST_PRIVATE_KEY: ${{ secrets.UPDATE_MANIFEST_PRIVATE_KEY }}
+      CGO_ENABLED: 0
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,6 +36,10 @@ jobs:
         working-directory: frontend
         run: npm ci
 
+      - name: Build frontend bundle
+        working-directory: frontend
+        run: npm run build
+
       - name: Install Wails
         run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.11.0
 
@@ -42,7 +47,13 @@ jobs:
         shell: pwsh
         run: |
           if ([string]::IsNullOrWhiteSpace($env:UPDATE_MANIFEST_PRIVATE_KEY)) { throw 'UPDATE_MANIFEST_PRIVATE_KEY is required' }
+          if (-not (Test-Path -LiteralPath 'frontend\dist\index.html')) { throw '前端构建产物 frontend/dist/index.html 不存在，终止发布以避免生成无界面程序' }
           wails build -clean -s -ldflags "-X main.Version=$env:APP_VERSION -X main.VersionCommit=${{ github.sha }}"
+          $application = Get-ChildItem build\bin -Filter "*.exe" -File | Where-Object { $_.Name -ne "a-share-updater.exe" -and $_.Name -notlike "*-installer.exe" } | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          if (-not $application) { throw 'Wails 主程序构建产物不存在' }
+          $buildInfo = & go version -m $application.FullName
+          $buildInfoText = [string]::Join([Environment]::NewLine, [string[]]$buildInfo)
+          if ($buildInfoText -notmatch 'CGO_ENABLED=0') { throw "Windows 发布必须使用 CGO_ENABLED=0，实际产物：$($application.FullName)" }
           go build -trimpath -ldflags "-s -w" -o build\bin\a-share-updater.exe .\backend\cmd\a-share-updater
           $keyPath = Join-Path $env:RUNNER_TEMP 'manifest-private.key'
           [IO.File]::WriteAllText($keyPath, $env:UPDATE_MANIFEST_PRIVATE_KEY, [Text.UTF8Encoding]::new($false))

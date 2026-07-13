@@ -5,6 +5,7 @@
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
+$env:CGO_ENABLED = "0"
 
 function Invoke-CodeSign {
   param([string]$Path)
@@ -24,6 +25,9 @@ Write-Host "构建前端..."
 Push-Location frontend
 npm run build
 Pop-Location
+if (-not (Test-Path -LiteralPath (Join-Path $root "frontend\dist\index.html"))) {
+  throw "前端构建产物 frontend/dist/index.html 不存在，终止打包以避免生成无界面程序"
+}
 
 Write-Host "构建 A 股智投工作台主程序并生成 Wails 绑定..."
 wails build -clean -s -ldflags "-X main.Version=$Version"
@@ -35,6 +39,9 @@ $application = Get-ChildItem (Join-Path $root "build\bin") -Filter "*.exe" -File
   Sort-Object LastWriteTime -Descending |
   Select-Object -First 1
 if (-not $application) { throw "Wails 主程序构建产物不存在" }
+$buildInfo = & go version -m $application.FullName
+$buildInfoText = [string]::Join([Environment]::NewLine, [string[]]$buildInfo)
+if ($buildInfoText -notmatch 'CGO_ENABLED=0') { throw "Windows 发布必须使用 CGO_ENABLED=0，实际产物：$($application.FullName)" }
 Invoke-CodeSign $application.FullName
 Invoke-CodeSign (Join-Path $root "build\bin\a-share-updater.exe")
 
