@@ -7,7 +7,7 @@ const macBuild = readFileSync(new URL('../../scripts/build-macos.sh', import.met
 
 test('GitHub release publishes the portable Windows package', () => {
   assert.match(workflow, /build-portable\.ps1/)
-  assert.match(workflow, /A股智投工作台-便携版\.zip/)
+  assert.match(workflow, /a-share-investment-workbench-portable-windows-amd64\.zip/)
 })
 
 test('GitHub release publishes a macOS DMG with the release version', () => {
@@ -15,4 +15,6 @@ test('GitHub release publishes a macOS DMG with the release version', () => {
   assert.match(workflow, /softprops\/action-gh-release@v2/)
   assert.match(workflow, /a-share-investment-workbench_\*_macos_universal\.dmg/)
   assert.match(macBuild, /APP_VERSION/)
+  assert.match(macBuild, /max-old-space-size=6144/)
+  assert.match(macBuild, /wails build --clean -s/)
 })
