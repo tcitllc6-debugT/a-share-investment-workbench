@@ -71,7 +71,7 @@ AI 模型服务统一在“AI 控制台 > AI 配置”中管理，普通“设�
 ## GitHub 自动更新与发布
 
 - 客户端只从本仓库的 HTTPS GitHub Releases 下载 `manifest.json` 和版本压缩包，不再使用自建更新服务器。
-- 推送到 `main` 后，`Publish A股智投工作台 Update` 工作流会发布 Windows 热更新包、Windows 便携版、macOS 通用 DMG 和签名清单。
+- 推送到 `main` 后，`Publish A股智投工作台 Update` 工作流会发布 Windows 热更新包、Windows 便携版 `a-share-investment-workbench-portable-windows-amd64.zip`、macOS 通用 DMG 和签名清单。
 - 仓库需要配置 Actions Secret：`UPDATE_MANIFEST_PRIVATE_KEY`。私钥只放在 GitHub Secrets；客户端仅内置对应公钥。
 - 应用启动后在后台检查正式版本，发现新版本时提示；Windows 可由更新助手原地替换并保留旧版回滚状态，macOS 会打开对应 DMG 下载页；“设置”和“关于”仍提供手动检查入口。
 - 客户端在应用更新前校验 Ed25519 签名和 SHA-256 摘要，更新异常时保留原版本并记录回滚状态。

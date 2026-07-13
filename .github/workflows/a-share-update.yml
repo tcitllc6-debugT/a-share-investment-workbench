@@ -57,7 +57,7 @@ jobs:
           generate_release_notes: true
           files: |
             build/release/${{ env.APP_VERSION }}/a-share-investment-workbench-windows-amd64.zip
-            build/release/${{ env.APP_VERSION }}/A股智投工作台-便携版.zip
+            build/release/${{ env.APP_VERSION }}/a-share-investment-workbench-portable-windows-amd64.zip
             build/release/${{ env.APP_VERSION }}/manifest.json
 
   publish-macos-release:
@@ -146,7 +146,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ env.APP_VERSION }}
-          overwrite_files: true
           files: |
             ${{ runner.temp }}/release/a-share-investment-workbench_*_macos_universal.dmg
             ${{ runner.temp }}/release/manifest.json

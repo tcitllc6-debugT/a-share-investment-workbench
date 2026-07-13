@@ -67,7 +67,7 @@ A股智投工作台便携版
 
 $releaseDir = Join-Path $root "build\release\$Version"
 New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
-$archive = Join-Path $releaseDir "A股智投工作台-便携版.zip"
+$archive = Join-Path $releaseDir "a-share-investment-workbench-portable-windows-amd64.zip"
 Remove-Item -LiteralPath $archive -Force -ErrorAction SilentlyContinue
 Compress-Archive -LiteralPath $portableRoot -DestinationPath $archive -CompressionLevel Optimal
 
