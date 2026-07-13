@@ -1,0 +1,80 @@
+:root {
+  color-scheme: light;
+  --workspace-topbar-height: 60px;
+  --workspace-toolbar-height: 50px;
+  --workspace-secondary-wide: 220px;
+  --workspace-secondary-standard: 188px;
+  --workspace-radius-xs: 4px;
+  --workspace-radius-sm: 6px;
+  --workspace-radius-md: 8px;
+  --workspace-font: "MiSans", "PingFang SC", "Microsoft YaHei UI", "Segoe UI", sans-serif;
+  --workspace-number-font: "SFMono-Regular", "Cascadia Mono", "Roboto Mono", monospace;
+  --workspace-positive: #e5484d;
+  --workspace-negative: #16a36f;
+  --workspace-warning: #e69020;
+  --workspace-info: #3478f6;
+  --workspace-layer-nav: 20;
+  --workspace-layer-drawer: 40;
+  --workspace-layer-overlay: 80;
+}
+
+:root,
+:root[data-theme-mode="light"] {
+  color-scheme: light;
+  --workspace-canvas: #f5f8fc;
+  --workspace-canvas-deep: #edf3fb;
+  --workspace-surface: rgba(255, 255, 255, 0.88);
+  --workspace-surface-elevated: rgba(255, 255, 255, 0.96);
+  --workspace-surface-solid: #ffffff;
+  --workspace-surface-muted: #f1f5fb;
+  --workspace-surface-hover: #eaf2ff;
+  --workspace-text: #162033;
+  --workspace-text-secondary: #40506a;
+  --workspace-text-muted: #64748b;
+  --workspace-text-faint: #8a99ad;
+  --workspace-border: rgba(126, 151, 184, 0.24);
+  --workspace-border-strong: rgba(82, 116, 160, 0.34);
+  --workspace-accent: #3478f6;
+  --workspace-accent-hover: #2367df;
+  --workspace-accent-soft: #e9f1ff;
+  --workspace-accent-muted: rgba(52, 120, 246, 0.12);
+  --workspace-link: #2467d6;
+  --workspace-glass: blur(20px) saturate(150%);
+  --workspace-shadow-sm: 0 1px 2px rgba(28, 52, 84, 0.06), 0 8px 22px rgba(36, 71, 114, 0.05);
+  --workspace-shadow: 0 16px 40px rgba(32, 67, 111, 0.10);
+  --workspace-focus-ring: 0 0 0 3px rgba(52, 120, 246, 0.24);
+  --workspace-scrollbar: rgba(80, 111, 151, 0.30);
+  --workspace-selection: rgba(52, 120, 246, 0.18);
+}
+
+:root[data-theme-mode="dark"] {
+  color-scheme: dark;
+  --workspace-canvas: #0b1020;
+  --workspace-canvas-deep: #080d19;
+  --workspace-surface: rgba(19, 28, 49, 0.84);
+  --workspace-surface-elevated: rgba(25, 36, 61, 0.96);
+  --workspace-surface-solid: #131c31;
+  --workspace-surface-muted: #18243b;
+  --workspace-surface-hover: #1d3154;
+  --workspace-text: #edf4ff;
+  --workspace-text-secondary: #c6d4e8;
+  --workspace-text-muted: #a6b6cf;
+  --workspace-text-faint: #7e90aa;
+  --workspace-border: rgba(166, 187, 222, 0.17);
+  --workspace-border-strong: rgba(166, 187, 222, 0.28);
+  --workspace-accent: #77aaff;
+  --workspace-accent-hover: #91baff;
+  --workspace-accent-soft: rgba(72, 130, 255, 0.18);
+  --workspace-accent-muted: rgba(79, 139, 255, 0.14);
+  --workspace-link: #8ab6ff;
+  --workspace-positive: #ff686d;
+  --workspace-negative: #45d49a;
+  --workspace-warning: #f5b85f;
+  --workspace-info: #77aaff;
+  --workspace-glass: blur(22px) saturate(135%);
+  --workspace-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.20), 0 10px 26px rgba(0, 0, 0, 0.18);
+  --workspace-shadow: 0 20px 52px rgba(0, 0, 0, 0.32);
+  --workspace-focus-ring: 0 0 0 3px rgba(119, 170, 255, 0.28);
+  --workspace-scrollbar: rgba(163, 185, 219, 0.26);
+  --workspace-selection: rgba(119, 170, 255, 0.22);
+}

@@ -1,0 +1,59 @@
+name: Build macOS DMG
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-universal-dmg:
+    name: Universal DMG
+    runs-on: macos-14
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.x'
+          cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Wails
+        shell: bash
+        run: |
+          go install github.com/wailsapp/wails/v2/cmd/wails@v2.11.0
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
+      - name: Install frontend dependencies
+        run: npm --prefix frontend ci
+
+      - name: Build universal macOS DMG
+        shell: bash
+        run: |
+          chmod +x scripts/build-macos.sh
+          scripts/build-macos.sh darwin/universal yes
+
+      - name: Verify DMG
+        shell: bash
+        run: |
+          test -f build/bin/a-share-investment-workbench_*_macos_universal.dmg
+          shasum -a 256 build/bin/a-share-investment-workbench_*_macos_universal.dmg
+
+      - name: Upload macOS DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: A股智投工作台-macos-universal
+          path: build/bin/a-share-investment-workbench_*_macos_universal.dmg
+          if-no-files-found: error
+          retention-days: 30

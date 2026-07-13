@@ -1,0 +1,19 @@
+{
+  "name": "A股智投工作台",
+  "outputfilename": "A股智投工作台",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "http://localhost:5173",
+  "author": {
+    "name": "A股智投工作台",
+    "email": ""
+  },
+  "info": {
+    "companyName": "A股智投工作台",
+    "productName": "A股智投工作台",
+    "productVersion": "1.2.0",
+    "copyright": "Copyright A股智投工作台 contributors",
+    "comments": "面向 A 股投资者的本地优先研究与决策工作台。"
+  }
+}

@@ -1,0 +1,96 @@
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #app {
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  margin: 0;
+}
+
+html {
+  background: var(--workspace-canvas-deep);
+  scrollbar-color: var(--workspace-scrollbar) transparent;
+  scrollbar-width: thin;
+}
+
+body {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 72% -20%, var(--workspace-accent-muted), transparent 34%),
+    var(--workspace-canvas);
+  color: var(--workspace-text);
+  font-family: var(--workspace-font);
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--workspace-selection); }
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--workspace-scrollbar);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background-color: var(--workspace-border-strong); }
+
+button, input, select, textarea { font: inherit; }
+button, a { touch-action: manipulation; }
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--workspace-focus-ring);
+}
+
+.n-card {
+  background: var(--workspace-surface-elevated);
+  border-color: var(--workspace-border);
+  border-radius: var(--workspace-radius-md);
+  box-shadow: var(--workspace-shadow-sm);
+}
+
+.n-card-header,
+.n-card__content,
+.n-data-table,
+.n-data-table-table,
+.n-modal,
+.n-drawer-content,
+.n-dropdown-menu {
+  color: var(--workspace-text);
+}
+
+.n-data-table,
+.n-data-table-th,
+.n-data-table-td {
+  background-color: var(--workspace-surface-solid);
+  border-color: var(--workspace-border);
+}
+
+.n-modal,
+.n-drawer-content,
+.n-dropdown-menu {
+  background: var(--workspace-surface-elevated);
+  border-color: var(--workspace-border);
+  box-shadow: var(--workspace-shadow);
+  backdrop-filter: var(--workspace-glass);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .n-modal, .n-drawer-content, .n-dropdown-menu { backdrop-filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
